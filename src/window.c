@@ -13,7 +13,7 @@ void windowResizeCallback(GLFWwindow *window, int w, int h) {
 GLFWwindow *newWindow(int w, int h, char *title) {
     if (!glfwInit()) {
         fprintf(stderr, "Failed to initialize GLFW!\n");
-        return NULL;
+        return nullptr;
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -29,11 +29,11 @@ GLFWwindow *newWindow(int w, int h, char *title) {
         h = WINDOW_HEIGHT_DEFAULT;
     }
 
-    GLFWwindow* window = glfwCreateWindow(w, h, title, NULL, NULL);
-    if (window == NULL) {
+    GLFWwindow* window = glfwCreateWindow(w, h, title, nullptr, nullptr);
+    if (window == nullptr) {
         fprintf(stderr, "Failed to create GLFW window!\n");
         glfwTerminate();
-        return NULL;
+        return nullptr;
     }
 
     glfwMakeContextCurrent(window);
@@ -41,7 +41,7 @@ GLFWwindow *newWindow(int w, int h, char *title) {
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         fprintf(stderr, "Failed to initialize GLAD!\n");
-        return NULL;
+        return nullptr;
     }
 
     glViewport(0, 0, w, h);

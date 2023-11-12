@@ -3,8 +3,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <window.h>
-#include <stdbool.h>
+#include "gl/shader.h"
+#include "window.h"
 
 const char *vertexShaderSource = "#version 330 core\n"
                                  "layout (location = 0) in vec3 aPos;\n"
@@ -22,61 +22,29 @@ const char *fragmentShaderSource = "#version 330 core\n"
 int main() {
     printf("yeet\n");
     GLFWwindow *window = newWindow(1200, 720, "SOFT");
-    if (window == NULL) {
+    if (window == nullptr) {
         fprintf(stderr, "Failed to create the window!\n");
-        return -1;
+        return 1;
     }
 
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    int success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        fprintf(stderr, "Vertex shader failed to compile!\n%s\n", infoLog);
+    u32 shaderProgram = newShaderProgramFromSource(vertexShaderSource, fragmentShaderSource);
+    if (shaderProgram == 0) {
+        fprintf(stderr, "Failed to create shader program!\n");
         glfwTerminate();
-        return -1;
+        return 1;
     }
 
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        fprintf(stderr, "Fragment shader failed to compile!\n%s\n", infoLog);
-        glfwTerminate();
-        return -1;
-    }
-
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    // check for linking errors
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        fprintf(stderr, "Failed to link shader program!\n%s\n", infoLog);
-        glfwTerminate();
-        return -1;
-    }
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
-    float vertices[] = {
+    f32 vertices[] = {
             0.5f,  0.5f, 0.0f,  // top right
             0.5f, -0.5f, 0.0f,  // bottom right
             -0.5f, -0.5f, 0.0f,  // bottom left
             -0.5f,  0.5f, 0.0f   // top left
     };
-    unsigned int indices[] = {  // note that we start from 0!
+    u32 indices[] = {  // note that we start from 0!
             0, 1, 3,  // first Triangle
             1, 2, 3   // second Triangle
     };
-    unsigned int VBO, VAO, EBO;
+    u32 VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);

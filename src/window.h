@@ -8,6 +8,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "common.h"
+
 static const int WINDOW_WIDTH_DEFAULT = 1200;
 static const int WINDOW_HEIGHT_DEFAULT = 720;
 
