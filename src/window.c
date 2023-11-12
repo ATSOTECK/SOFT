@@ -6,6 +6,8 @@
 
 #include <stdio.h>
 
+#include "input.h"
+
 void windowResizeCallback(GLFWwindow *window, int w, int h) {
     glViewport(0, 0, w, h);
 }
@@ -48,6 +50,8 @@ GLFWwindow *newWindow(int w, int h, char *title) {
 
     glViewport(0, 0, w, h);
     glfwSetFramebufferSizeCallback(window, windowResizeCallback);
+
+    inputInit(window);
 
     return window;
 }

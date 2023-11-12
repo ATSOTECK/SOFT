@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "gl/shader.h"
+#include "input.h"
 #include "window.h"
 
 int main() {
@@ -46,8 +47,9 @@ int main() {
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
+        inputUpdate();
 
-        if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        if (isKeyDown(vk_escape)) {
             glfwSetWindowShouldClose(window, true);
         }
 
