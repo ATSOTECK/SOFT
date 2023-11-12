@@ -10,6 +10,11 @@
 u32 newVertexShader(const char *source);
 u32 newFragmentShader(const char *source);
 
-u32 newShaderProgramFromSource(const char *vertex, const char *fragment);
+u32 newShaderFromSource(const char *vertex, const char *fragment);
+u32 newShaderFromFile(const char *vertex, const char *fragment);
+
+void shaderSetBool(u32 shader, const char *name, bool value);
+void shaderSetInt(u32 shader, const char *name, int value);
+void shaderSetFloat(u32 shader, const char *name, f32 value);
 
 #endif //SOFT_SHADER_H

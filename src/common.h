@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 
-enum bool { false, true };
+typedef enum { false, true } bool;
 
 #ifndef __cplusplus
 #   define nullptr ((void*)0)
